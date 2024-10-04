@@ -1,0 +1,28 @@
+version: 1
+kind: pipeline
+spec:
+  stages:
+    - name: build
+      type: ci
+      spec:
+        steps:
+          - name: build
+            type: run
+            spec:
+              container: node
+              script: |-
+                npm install
+                npm run build
+          - name: deploy
+            type: plugin
+            spec:
+              image: plugins/docker
+              settings:
+                registry: hub.nbaxp.com
+                repo: hub.nbaxp.com/test/demo
+                username: admin
+                password: aA123456
+                dockerfile: Dockerfile
+                context: .
+                tags:
+                  - latest
