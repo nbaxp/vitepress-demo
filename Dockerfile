@@ -5,7 +5,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-FROM nginx:1.24.0 as final
+FROM nginx:1.24.0 AS final
 COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
